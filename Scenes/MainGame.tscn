@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Debugging/transformation_info.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/player_controller.gd" type="Script" id=3]
+
+[node name="Main" type="Node2D"]
+
+[node name="Debugger" type="Node" parent="."]
+
+[node name="TransformationInfo" type="RichTextLabel" parent="Debugger"]
+margin_left = 1002.92
+margin_top = 19.5147
+margin_right = 1343.92
+margin_bottom = 59.5147
+fit_content_height = true
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+rb = ExtResource( 3 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 656.195, 366.281 )
