@@ -1,8 +1,20 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Debugging/transformation_info.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/player_controller.gd" type="Script" id=3]
+[ext_resource path="res://Art/Simple Space/PNG/Retina/ship_sidesC.png" type="Texture" id=4]
+[ext_resource path="res://Scripts/enemy_controller.gd" type="Script" id=5]
+[ext_resource path="res://Art/floating-ghost.png" type="Texture" id=6]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( -82.2203, 118.7, 82.2203, -118.7, 150.201, 127.53, -95.4493, -18.1696, 95.4493, 18.1696, 137.885, 733.471, -149.114, -347.015, 149.114, 347.015, 360.304, 192.988, -172.654, -81.1381, 172.654, 81.1381, 370.971, 718.352, -43.3994, 87.7423, 43.3994, -87.7423, 522.161, 717.092, -112.272, -41.5125, 112.272, 41.5125, 707.945, 168.383, -89.6293, -55.6645, 89.6293, 55.6645, 725.009, 714.572, -81.1381, 56.608, 81.1381, -56.608, 868.64, 714.572, -129.255, -14.152, 129.255, 14.152, 984.946, 177.114, -74.5338, -49.0602, 74.5338, 49.0602, 1031.17, 703.233, -46.2298, 59.4384, 46.2298, -59.4384, 1171.02, 699.453, -207.563, -16.9824, 207.563, 16.9824, 1211.94, 179.495, -159.446, 21.6997, 159.446, -21.6997, 1298.23, 694.916, 55.4365, 13.8591, -55.4365, -13.8591, 1299.05, 56.0667, 77.4499, -115.614, -77.4499, 115.614, 141.552, 57.1455, 0, 0, 0, 0, 150.201, 127.53 )
+}
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 49.6595
+height = 0.0
 
 [node name="Main" type="Node2D"]
 
@@ -22,3 +34,32 @@ rb = ExtResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 656.195, 366.281 )
+scale = Vector2( 0.25, 0.25 )
+
+[node name="EnemyPath" type="Path2D" parent="."]
+position = Vector2( -71.2935, 9.36359 )
+curve = SubResource( 1 )
+script = ExtResource( 5 )
+
+[node name="EnemyPathFollow" type="PathFollow2D" parent="EnemyPath"]
+position = Vector2( 150.201, 127.53 )
+rotation = -0.947523
+
+[node name="Enemy" type="KinematicBody2D" parent="EnemyPath/EnemyPathFollow"]
+scale = Vector2( 0.25, 0.25 )
+
+[node name="EnemySprite" type="Sprite" parent="EnemyPath/EnemyPathFollow/Enemy"]
+texture = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyPath/EnemyPathFollow/Enemy"]
+position = Vector2( -1.34854, 11.7219 )
+shape = SubResource( 2 )
+
+[node name="EnemyGhostPathFollow" type="PathFollow2D" parent="EnemyPath"]
+position = Vector2( 128.175, 78.1737 )
+rotation = 2.10319
+offset = 7907.46
+
+[node name="GhostSprite" type="Sprite" parent="EnemyPath/EnemyGhostPathFollow"]
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 6 )

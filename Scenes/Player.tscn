@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
+[ext_resource path="res://Scenes/Sensor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Art/Simple Space/PNG/Retina/ship_L.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/player_controller.gd" type="Script" id=4]
 
@@ -12,7 +13,7 @@ resource_name = "Flying"
 length = 2.0
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:position")
+tracks/0/path = NodePath("ShipSprite:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -21,7 +22,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 10, 0 ), Vector2( 0, 0 ), Vector2( -10, 0 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 0, 10 ), Vector2( 0, 0 ), Vector2( 0, -10 ), Vector2( 0, 0 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -29,7 +30,7 @@ resource_name = "Idle"
 length = 2.0
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:position")
+tracks/0/path = NodePath("ShipSprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -44,17 +45,22 @@ tracks/0/keys = {
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 4 )
 
-[node name="PlayerSprite" type="Sprite" parent="."]
-position = Vector2( -2.90393, 0 )
+[node name="ShipSprite" type="Sprite" parent="."]
 rotation = 1.5708
 texture = ExtResource( 3 )
 
-[node name="PlayerCollider" type="CollisionShape2D" parent="."]
+[node name="ShipCollider" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
-[node name="PlayerAnimation" type="AnimationPlayer" parent="."]
+[node name="ShipAnimation" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
 anims/Flying = SubResource( 2 )
 anims/Idle = SubResource( 3 )
+
+[node name="LongRangeSensor" parent="." instance=ExtResource( 1 )]
+scale = Vector2( 8, 8 )
+
+[node name="ShortRangeSensor" parent="." instance=ExtResource( 1 )]
+scale = Vector2( 4, 4 )
